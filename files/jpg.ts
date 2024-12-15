@@ -23,6 +23,22 @@ export class JpgFile implements FileFormat {
         }
     }
 
+    public get imageOriginDateTime(): Date {
+        try
+        {
+            var dateTimeOriginal = Buffer.from(this.metadata.Exif[piexifjs.ExifIFD.DateTimeOriginal] || "", 'latin1').toString("utf-8");
+            var dateTimeOriginalSplit = dateTimeOriginal.split(' ');
+
+            var dateTimeFormatted = dateTimeOriginalSplit[0].replace(/:/g, '-') + 'T' + dateTimeOriginalSplit[1];
+            
+            return new Date(dateTimeFormatted);
+        }
+        catch
+        {
+            return new Date();
+        }
+    }
+
     public toBuffer(): Buffer {
         const updatedImageDataUrl = piexifjs.insert(piexifjs.dump(this.metadata), this.dataUrl);
         return Buffer.from(updatedImageDataUrl.split(",")[1], 'base64');

@@ -60,6 +60,10 @@ export class PngFile implements FileFormat {
         }
     }
 
+    get imageOriginDateTime(): Date {
+        return new Date(0);
+    }
+
     get imageDescription(): string {
         return this.xmp.getAltArrayProperty("dc:description");
     }

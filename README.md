@@ -1,3 +1,5 @@
+**This is a personal fork of https://github.com/alexeiskachykhin/obsidian-image-metadata-plugin. Intent was to make some small changes without worrying about crappy implementation**
+
 # Image Metadata Plugin
 
 ![Release version](https://img.shields.io/github/v/release/alexeiskachykhin/obsidian-image-metadata-plugin?style=for-the-badge) ![Download count](https://img.shields.io/github/downloads/alexeiskachykhin/obsidian-image-metadata-plugin/total?style=for-the-badge)

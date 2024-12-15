@@ -48,20 +48,44 @@ export default class ImageMetadataPlugin extends Plugin {
         }
 
         const image = await this.readerWriter.readFile(file);
-
-        viewContent.createDiv({
-            cls: 'image-metadata__tag-name',
-            text: 'Description'
-        });
+        
+        if(image.imageOriginDateTime.getTime() !== new Date(0).getTime())
+        {
+            const dateTime = this.AddDateTime(image.imageOriginDateTime, viewContent);
+        }
 
         const descriptionInput = viewContent.createEl('textarea', {
             cls: 'image-metadata__tag-value',
-            text: image.imageDescription
+            text: image.imageDescription,
+            attr: {
+                placeholder: 'Description'
+            }
         });
 
         descriptionInput.addEventListener('change', () => {
             image.imageDescription = descriptionInput.value;
             this.readerWriter.writeFile(file, image);
         });
+    }
+
+    private AddDateTime(dateTime: Date, parent : Element) : Element {
+        var dayOfWeek = dateTime.toLocaleString('default', { weekday: 'long' });
+        var displayDate = dateTime.toLocaleString('default', { day: 'numeric', year: 'numeric', month: 'long' });
+        var displayTime = dateTime.toLocaleString('default', { hour: 'numeric', minute: 'numeric', hour12: true });
+
+        const div = parent.createDiv({
+            cls: 'image-metadata__date-time-div'
+        });
+
+        const timeDiv = div.createDiv({
+            text: `🕓 ${displayTime}`
+        });
+
+        const dateDiv = div.createDiv({
+            text: `📅 ${displayDate} (${dayOfWeek})`
+        });
+
+
+        return div;
     }
 }
